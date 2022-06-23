@@ -51,13 +51,13 @@
                 }
             },
             ClearLargePizza() {
-                if (this.smallPizzaQty > 0){
+                if (this.largePizzaQty > 0){
                     this.largePizzaTotal -= 108.99;
                     this.largePizzaQty -=1;
                 }
             },
             cartTotal() {
-                // let localTotal = 1000;
+    
                 return (this.smallPizzaTotal + this.mediumPizzaTotal + this.largePizzaTotal).toFixed(2);
             },
             totalQty() {
@@ -65,15 +65,28 @@
             },
             makePayment(){
                 if (!this.paymentAmount){
-                this.paymentMessage = 'No amount entered!';
+                this.paymentMessage = 'No amount entered!'
                 }
-                    if (!this.paymentAmount >= this.cartTotal() ){
-                    this.paymentMessage = 'Payment successful!';
+                   if (this.paymentAmount >= this.cartTotal() ){
+                    this.paymentMessage = 'Payment successful!'
+        
 
-                
+                      setTimeout(() => {
+                        this.payNow = false;
+                        this.clearCart()
+                       },10000);
             } else {
-                this.paymentMessage = 'Payment failed!';
+                this.paymentMessage = 'Payment failed!'
             }
+        },
+        clearCart(){
+            this.smallPizzaTotal = 0.00;
+            this.smallPizzaQty = 0.00;
+            this.mediumPizzaTotal = 0.00;
+            this.mediumPizzaQty = 0.00;
+            this.largePizzaTotal = 0.00;
+            this.largePizzaQty = 0.00;
+            
         }
        
             }">
@@ -92,18 +105,18 @@
                 </div>
 
                 <div class="f1">
-                    <!--<a href"" class="cart-link" x-on:click="showCart=true" >-->
+                
                     <button x-on:click="ShowCart=true"><img src="./images/shopping-cart.png" width="30" alt="">Show
                         cart</button>
                     <strong x-show="totalQty() > 0"><span x-text="totalQty()"></span> pizzas in the cart.</strong>
                 </div>
-                <!--<a>-->
-                <!--<span>0.00</span>-->
+                
+    
 
             </div>
 
             <div class="cart-box">
-                <div class="cart" v-show="showCart">
+                <div class="cart" x-show="showCart">
 
                 </div>
                 <button x-on:click="showCart=false">
@@ -113,7 +126,7 @@
 
  
 
-        <div class="test">
+        <div class="">
             <h2>Place Your Order Here:</h2>
         </div>
 
@@ -122,11 +135,11 @@
                 <td>Small pizza</td>
                 <td>
                     <span x-text="smallPizzaQty"></span>
-                    <button x-on:click="BuySmallPizza">+</button>
+                    <button x-on:click="BuySmallPizza()">+</button>
                     <button x-on:click="ClearSmallPizza" x-show="smallPizzaQty>0">-</button>
                 </td>
                 <td>
-                    R<span x-text="smallPizzaTotal"></span>
+                    R<span x-text="smallPizzaTotal.toFixed(2)"></span>
                 </td>
             </tr>
             <tr>
@@ -138,15 +151,15 @@
 
                 </td>
                 <td>
-                    R<span x-text="mediumPizzaTotal"></span>
+                    R<span x-text="mediumPizzaTotal.toFixed(2)"></span>
                 </td>
             </tr>
             <tr>
                 <td>Large pizza</td>
                 <td>
                     <span x-text="largePizzaQty"></span>
-                    <button @click="BuyLargePizza()" x-show="largePizzaQty>0">+</button>
-                    <button @click="ClearLargePizza" x-show="largePizzaQty>0">-</button>
+                    <button x-on:click="BuyLargePizza()">+</button>
+                    <button x-on:click="ClearLargePizza" x-show="largePizzaQty>0">-</button>
 
                 </td>
                 <td>
@@ -169,9 +182,13 @@
 
                             <label for="">Payment amount</label>
                             <input class="input" type="number" placeholder="Payment amount" x-model="paymentAmount">
-                            <button @click="makePayment()" class="btn"><img src="./images/shopping-cart.png" width="20"
+                            <button x-on:click="makePayment" class="btn"><img src="./images/shopping-cart.png" width="20"
                                     alt="">Pay
                                 Now</button>
+                            </div>
+                            <div>
+                        <!--<div x-text="paymentAmount"></div>-->
+
                 </td>
                 <td>
                     <button x-show="!payNow" x-on:click="payNow=true" class="btn">
