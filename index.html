@@ -75,7 +75,10 @@
                         this.payNow = false;
                         this.paymentAmount = false;
                         this.paymentMessage = '',
-                        this.clearCart()
+                        this.clearCart();
+                        this.showCart= false;
+
+                        
                        },3000);
             } else {
                 this.paymentMessage = 'Insufficient Amount!'
@@ -110,8 +113,8 @@
                 <strong x-show="totalQty() > 0"><span x-text="totalQty()"></span> pizzas in the cart.</strong>
 
             </div>
-            <div class="cart-box" x-show="showCart">
-
+            <div class="cart-box" x-show="showCart"> 
+                
                 <div>
                     <div class="cart">
 
